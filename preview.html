@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Khmer:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+  background:#0d0010;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Noto Serif Khmer',serif;
+  overflow:hidden;
+}
+
+/* floating hearts background */
+.bg-hearts{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.bh{
+  position:absolute;bottom:-40px;
+  font-size:var(--s);opacity:0;
+  animation:rise var(--d) var(--dl) linear infinite;
+}
+@keyframes rise{
+  0%{transform:translateY(0);opacity:0;}
+  10%{opacity:0.35;}
+  90%{opacity:0.15;}
+  100%{transform:translateY(-105vh);opacity:0;}
+}
+
+/* MAIN CARD */
+.card{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:52px 40px 44px;
+  max-width:380px;width:90%;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,100,150,0.2);
+  border-radius:4px;
+}
+
+.rose{
+  font-size:56px;
+  display:block;
+  margin-bottom:20px;
+  animation:bob 3s ease-in-out infinite;
+}
+@keyframes bob{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+}
+
+.question{
+  font-size:20px;
+  font-weight:600;
+  color:#ffd6e7;
+  line-height:1.7;
+  margin-bottom:36px;
+}
+
+.btns{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:center;
+}
+
+.btn-yes{
+  width:100%;
+  padding:14px;
+  background:linear-gradient(135deg,#c0004a,#ff2d6e);
+  border:none;border-radius:3px;
+  font-family:'Noto Serif Khmer',serif;
+  font-size:16px;font-weight:600;
+  color:#fff;cursor:pointer;
+  box-shadow:0 4px 20px rgba(255,45,110,0.4);
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.btn-yes:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,45,110,0.55);}
+.btn-yes:active{transform:scale(0.97);}
+
+.btn-no{
+  width:100%;
+  padding:14px;
+  background:transparent;
+  border:1px solid rgba(255,100,150,0.3);
+  border-radius:3px;
+  font-family:'Noto Serif Khmer',serif;
+  font-size:16px;
+  color:rgba(255,150,180,0.6);
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.btn-no:hover{
+  color:rgba(255,150,180,0.4);
+  border-color:rgba(255,100,150,0.15);
+}
+
+/* YES PAGE */
+#yes-page{
+  position:fixed;inset:0;z-index:10;
+  display:flex;align-items:center;justify-content:center;
+  background:#0d0010;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.8s ease;
+  text-align:center;padding:32px;
+}
+#yes-page.show{opacity:1;pointer-events:all;}
+
+.yes-inner{
+  animation:popIn 0.7s 0.5s cubic-bezier(0.34,1.5,0.64,1) both;
+}
+@keyframes popIn{
+  from{opacity:0;transform:scale(0.7);}
+  to{opacity:1;transform:scale(1);}
+}
+.yes-emoji{font-size:72px;display:block;margin-bottom:18px;animation:bob 2.5s ease-in-out infinite;}
+.yes-title{
+  font-size:28px;font-weight:700;
+  color:#ff6b9d;
+  margin-bottom:12px;line-height:1.4;
+}
+.yes-sub{
+  font-size:15px;line-height:1.9;
+  color:rgba(255,214,231,0.7);
+}
+
+/* NO PAGE */
+#no-page{
+  position:fixed;inset:0;z-index:10;
+  display:flex;align-items:center;justify-content:center;
+  background:#0d0010;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.8s ease;
+  text-align:center;padding:32px;
+}
+#no-page.show{opacity:1;pointer-events:all;}
+.no-inner{animation:popIn 0.7s 0.5s cubic-bezier(0.34,1.5,0.64,1) both;}
+.no-emoji{font-size:72px;display:block;margin-bottom:18px;animation:bob 2.5s ease-in-out infinite;}
+.no-title{font-size:26px;font-weight:700;color:#ff6b9d;margin-bottom:12px;line-height:1.5;}
+.no-sub{font-size:15px;line-height:1.9;color:rgba(255,214,231,0.65);}
+</style>
+</head>
+<body>
+
+<div class="bg-hearts" id="bgHearts"></div>
+
+<!-- MAIN -->
+<div class="card" id="mainCard">
+  <span class="rose">🌹</span>
+  <div class="question">
+    តើអូនព្រមទទួលបងPuthi <br>ដែលជាប្រុសស្មោះជាងគេ​​ក្នុង Galaxy milkiway នេះដែរទេ ?
+  </div>
+  <div class="btns">
+    <button class="btn-yes" id="yesBtn">💕 ព្រម</button>
+    <button class="btn-no" id="noBtn">មិនព្រម</button>
+  </div>
+</div>
+
+<!-- YES PAGE -->
+<div id="yes-page">
+  <div class="yes-inner">
+    <span class="yes-emoji">💑</span>
+    <div class="yes-title">ចាប់ពីពេលនេះទៅយើងជាសង្សារគ្នាហើយ! 🌹</div>
+    <div class="yes-sub">
+      បងនឹងសន្យាថាបងមិនសស្រឡាញ់អូនតែមួយថ្ងែមិនមែនមួយខែក៏មិនមែនមួយ
+  ឆ្នាំគីបងស្រឡាញ់អូនតែមួយភ្លែត
+    </div>
+  </div>
+</div>
+
+<!-- NO PAGE -->
+<div id="no-page">
+  <div class="no-inner">
+    <span class="no-emoji">😏</span>
+    <div class="no-title">អាញ់ក៏មិនព្រមដែរ!</div>
+    <div class="no-sub">ទៅណាទៅទៅ😤</div>
+  </div>
+</div>
+
+<script>
+// floating hearts
+const bg = document.getElementById('bgHearts');
+const sym = ['🌸','💕','🌺','💗','🌷','♥'];
+for(let i=0;i<18;i++){
+  const h=document.createElement('div');h.className='bh';
+  h.textContent=sym[Math.floor(Math.random()*sym.length)];
+  h.style.left=Math.random()*100+'%';
+  h.style.setProperty('--s',10+Math.random()*18+'px');
+  h.style.setProperty('--d',7+Math.random()*9+'s');
+  h.style.setProperty('--dl',-Math.random()*10+'s');
+  bg.appendChild(h);
+}
+
+function hideMain(cb){
+  const card = document.getElementById('mainCard');
+  card.style.transition = 'all 0.5s';
+  card.style.opacity = '0';
+  card.style.transform = 'scale(0.9)';
+  setTimeout(cb, 450);
+}
+
+// YES
+document.getElementById('yesBtn').onclick = () => {
+  document.getElementById('yesSong').play();
+  hideMain(()=> document.getElementById('yes-page').classList.add('show'));
+};
+
+// NO
+document.getElementById('noBtn').onclick = () => {
+  document.getElementById('noSong').play();
+  hideMain(()=> document.getElementById('no-page').classList.add('show'));
+};
+</script>
+
+<!-- AUDIO -->
+<audio id="yesSong" src="yung kai - blue (official music video).mp3"></audio>
+<audio id="noSong" src="Dominic Fike - Babydoll (Lyrics).mp3"></audio>
+
+</body>
+</html>
